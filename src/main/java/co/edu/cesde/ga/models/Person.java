@@ -7,6 +7,7 @@ public class Person {
     private String documentNumber;
     private String firstName;
     private Boolean status;
+    private String lastName;
 
     public Person(){
 

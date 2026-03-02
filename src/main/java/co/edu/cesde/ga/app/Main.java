@@ -14,15 +14,21 @@ public class Main {
         person.getFirstName();
         person2.setFirstName("Juan");
         person2.getFirstName();
-        person3.getFirstName("Erica");
+        person3.setFirstName("Erica");
         person3.getFirstName();
 
 
 
 
 
-        Person person4 = new Person(1L,"1,2,3","256","15437","Luis","Goenaga", boolean)
-        person4.getFirstName();
+        Person person4 = new Person(
+                1L,
+                "1,2,3",
+                "256",
+                "Luis",
+                "Goenaga",
+                true
+        );
 
     }
 }
