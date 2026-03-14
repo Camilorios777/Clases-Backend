@@ -1,21 +1,20 @@
 package co.edu.cesde.ga.models;
 
-public class Person {
+public abstract class Person {
 
-    private Long userId;
-    private String code;
-    private String documentNumber;
-    private String firstName;
-    private Boolean status;
-    private String lastName;
+    protected Long userId;
+    protected String documentType;
+    protected String documentNumber;
+    protected String firstName;
+    protected String lastName;
+    protected String status;
 
-    public Person(){
-
+    protected Person() {
     }
 
-    public Person(Long userId, String code, String documentNumber, String firstName, String lastName, Boolean status) {
+    protected Person(Long userId, String documentType, String documentNumber, String firstName, String lastName, String status) {
         this.userId = userId;
-        this.code = code;
+        this.documentType = documentType;
         this.documentNumber = documentNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,12 +29,12 @@ public class Person {
         this.userId = userId;
     }
 
-    public String getCode() {
-        return code;
+    public String getDocumentType() {
+        return documentType;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 
     public String getDocumentNumber() {
@@ -62,22 +61,23 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(String status) {
         this.status = status;
-
     }
+
     @Override
-    public  String toString(){
-        return
+    public String toString() {
+        return "Person{" +
                 "userId=" + userId +
-                        ", code='" + code + '\'' +
-                        ", documentNumber='" + documentNumber + '\'' +
-                        ", firstName='" + firstName + '\'' +
-                        ", lastName='" + lastName + '\'' +
-                        ", status=" + status;
+                ", documentType='" + documentType + '\'' +
+                ", documentNumber='" + documentNumber + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
