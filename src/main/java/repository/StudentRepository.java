@@ -7,10 +7,10 @@ import java.util.List;
 public interface StudentRepository {
 
     Student create(Student student);
-    boolean delate (Long studentId);
+    boolean delete (Long studentId);
     boolean update(Student studentUpdate);
     Student findById(Long studentId);
-    boolean findByDocumentNumber(String documentNumber);
+    boolean existsByDocumentNumber(String documentNumber);
 
     List<Student> findAll();
 

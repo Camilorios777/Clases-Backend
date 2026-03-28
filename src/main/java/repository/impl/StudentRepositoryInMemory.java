@@ -1,4 +1,4 @@
-package co.edu.cesde.ga.repository.impl;
+package repository.impl;
 
 import co.edu.cesde.ga.models.Student;
 import co.edu.cesde.ga.repository.StudentRepository;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StudentRepositoryInMemory implements StudentRepository {
 
-    private final List<Student> students;
+    private List<Student> students;
     private Long nextStudentId;
 
     public StudentRepositoryInMemory() {
@@ -18,95 +18,77 @@ public class StudentRepositoryInMemory implements StudentRepository {
 
     @Override
     public Student create(Student student) {
+
         if (student == null) {
             return null;
         }
 
+        // Validar documento duplicado
         if (existsByDocumentNumber(student.getDocumentNumber())) {
             return null;
         }
 
-        student.setStudentId(nextStudentId++);
+
         students.add(student);
         return student;
     }
 
-    @Override
-    public List<Student> findAll() {
-        return new ArrayList<>(students);
-    }
 
     @Override
-    public boolean existsById(Long studentId) {
-        if (studentId == null || studentId<0L) {
+    public boolean delete(Long studentId) {
+
+        Student student = findById(studentId);
+
+        if (student == null) {
             return false;
         }
 
-        for (Student student : students) {
-            if (studentId.equals(student.getStudentId())) {
-                return true;
-            }
-        }
-        return false;
+        students.remove(student);
+        return true;
     }
 
     @Override
-    public Student findByDocumentNumber(String documentNumber) {
-        if (documentNumber == null || documentNumber.isBlank()) {
+    public boolean update(Student studentUpdate) {
+
+        if (studentUpdate == null || studentUpdate.getStudentId() == null) {
+            return false;
+        }
+
+        Student existing = findById(studentUpdate.getStudentId());
+
+        if (existing == null) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Student findById(Long studentId) {
+
+        if (studentId == null) {
             return null;
         }
 
         for (Student student : students) {
-            if (documentNumber.equals(student.getDocumentNumber())) {
+            if (student.getStudentId().equals(studentId)) {
                 return student;
             }
         }
+
         return null;
-    }
-
-    @Override
-    public boolean update(Student updatedStudent) {
-        if (updatedStudent == null || updatedStudent.getStudentId() == null) {
-            return false;
-        }
-
-        for (Student student : students) {
-            if (!student.getStudentId().equals(updatedStudent.getStudentId())
-                    && student.getDocumentNumber().equals(updatedStudent.getDocumentNumber())) {
-                return false;
-            }
-        }
-
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).getStudentId().equals(updatedStudent.getStudentId())) {
-                students.set(i, updatedStudent);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long studentId) {
-        Student student = findById(studentId);
-        if (student == null) {
-            return false;
-        }
-        return students.remove(student);
     }
 
     @Override
     public boolean existsByDocumentNumber(String documentNumber) {
-        return findByDocumentNumber(documentNumber) != null;
-        if (documentNumber == null|| documentNumber.isBlank()){
-            return false;
-        }
-        for (Student student : students){
-            if (student.getDocumentNumber().equals(documentNumber)){
-                return student;
-            }
-        }
-        return null;
+        return false;
+    }
+    @Override
+    public List<Student> findAll() {
+        return new ArrayList<>(students); // evita modificar la original
     }
 
+    @Override
+    public boolean existById(Long studentId) {
+        return findById(studentId)==null;
+    }
 }
